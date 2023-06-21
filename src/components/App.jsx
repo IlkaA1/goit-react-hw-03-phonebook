@@ -8,27 +8,25 @@ import Filter from './Filter/Filter';
 import css from './app.module.css';
 import { save, load } from './Storage/Storage';
 
-const defaultContact = [
-  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-];
-
 const LOCALSTORAGE_KEY = 'contacts';
 
 export class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
     filter: '',
   };
 
   componentDidMount() {
-    save(LOCALSTORAGE_KEY, defaultContact);
-
     const contactsFromStorage = load(LOCALSTORAGE_KEY);
 
-    this.setState({ contacts: contactsFromStorage });
+    if (contactsFromStorage) {
+      this.setState({ contacts: contactsFromStorage });
+    }
   }
 
   addNewContact = info => {
